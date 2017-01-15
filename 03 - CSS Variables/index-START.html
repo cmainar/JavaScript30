@@ -7,20 +7,38 @@
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
-  <div class="controls">
+  <div class="controladores">
     <label for="spacing">Spacing:</label>
-    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-suffix="px">
 
     <label for="blur">Blur:</label>
-    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-suffix="px">
 
     <label for="base">Base Color</label>
-    <input id="base" type="color" name="base" value="#ffc600">
+    <input id="base" type="color" name="base" value="#B00000">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+<img src="http://vignette2.wikia.nocookie.net/nameofthewind/images/9/9e/The_Name_of_the_Wind_(UK)_cover.jpg/revision/latest?cb=20150620153806" height="350">
 
   <style>
+ /* las propiedades de img que queremos establecer como propiedades base */
+  :root {
+    --base: #B00000;
+    --spacing: 10px;
+    --blur: 10px;
+  }
+
+/* llamamos a las propiedades definidas en :root con la fórmula 'var(--variableName)' */
+  img {
+    padding: var(--spacing);
+    background: var(--base);
+    filter: blur(var(--blur));
+  }
+
+/* el estilo hl llevará el color base */
+  .hl {
+    color: var(--base);
+  }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -31,14 +49,14 @@
     }
 
     body {
-      background: #193549;
-      color: white;
+      background: #fafafa;
+      color: black;
       font-family: 'helvetica neue', sans-serif;
       font-weight: 100;
       font-size: 50px;
     }
 
-    .controls {
+    .controladores {
       margin-bottom: 50px;
     }
 
@@ -47,8 +65,21 @@
     }
   </style>
 
-  <script>
-  </script>
+<script>
+const inputs = document.querySelectorAll('.controladores input');
+
+function updatingStyle(){
+  /* la función necesita conoer el sufijo de los valores que extrae del documento, en el calor del padding y el blur, px. Por su parte el color no tiene sufijo, la fórmula "||" viene a decir "o nada", es decir, me devuelves el sufijo del valor o nada */
+  /* this no sé qué hace, preguntar a alex */
+  /* dataset es un elementos que contiene todos los atributos de data, en este caso, data-suffix, pero pueden ser más */
+  const suffix = this.dataset.suffix || '';
+  document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+}
+
+inputs.forEach(input => input.addEventListener('change', updatingStyle));
+inputs.forEach(input => input.addEventListener('mousemove', updatingStyle));
+
+</script>
 
 </body>
 </html>
