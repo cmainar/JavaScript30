@@ -70,7 +70,6 @@ const inputs = document.querySelectorAll('.controladores input');
 
 function updatingStyle(){
   /* la función necesita conoer el sufijo de los valores que extrae del documento, en el calor del padding y el blur, px. Por su parte el color no tiene sufijo, la fórmula "||" viene a decir "o nada", es decir, me devuelves el sufijo del valor o nada */
-  /* this no sé qué hace, preguntar a alex */
   /* dataset es un elementos que contiene todos los atributos de data, en este caso, data-suffix, pero pueden ser más */
   const suffix = this.dataset.suffix || '';
   document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
