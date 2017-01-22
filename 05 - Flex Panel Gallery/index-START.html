@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Flex Panels 💪</title>
-  <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+  <title>Flex Panel Gallery</title>
+  <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 </head>
 <body>
   <style>
     html {
       box-sizing: border-box;
       background:#ffc600;
-      font-family:'helvetica neue';
-      font-size: 20px;
-      font-weight: 200;
+      font-family:'Oswald', sans-serif;
+      font-size: 14px;
     }
     body {
       margin: 0;
@@ -24,6 +23,7 @@
     .panels {
       min-height:100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -38,35 +38,51 @@
         font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
         flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
         background 0.2s;
-      font-size: 20px;
+      font-size: 14px;
       background-size:cover;
       background-position:center;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
     }
 
 
-    .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
-    .panel2 { background-image:url(https://source.unsplash.com/1CD3fd8kHnE/1500x1500); }
-    .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
-    .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
-    .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+    .panel1 { background-image:url(https://drscdn.500px.org/photo/184593677/q%3D80_m%3D2000/6cc2805cbbfaeeaffa955eba82b1cd18); }
+    .panel2 { background-image:url(https://drscdn.500px.org/photo/184590655/q%3D80_m%3D2000/b2320c071d061dc9edfcfc831935bdad); }
+    .panel3 { background-image:url(https://drscdn.500px.org/photo/164771555/q%3D80_m%3D2000/828abadc93e7af5f4394f3651174b126); }
+    .panel4 { background-image:url(https://drscdn.500px.org/photo/115508667/q%3D80_m%3D2000/6f725df10deb7f684d85d21b56e0df9f); }
+    .panel5 { background-image:url(https://drscdn.500px.org/photo/83255003/q%3D80_m%3D2000/76589f5c8745dbfea3821870d9484af1); }
 
     .panel > * {
       margin:0;
       width: 100%;
       transition:transform 0.5s;
+      flex: 1 0 auto;
+      justify-content: center;
+      align-items: center;
+      display: flex;
     }
 
+    .panel > *:first-child { transform: translateY(-100%);}
+    .panel.open-active > *:first-child { transform: translateY(0);}
+    .panel > *:last-child { transform: translateY(100%);}
+    .panel.open-active > *:last-child { transform: translateY(0);}
+    .panel > *:nth-child(2) { transform: translateY(0);}
+    .panel.open-active > *:nth-child(2) { transform: translateX(-500%);}
+
     .panel p {
-      text-transform: uppercase;
-      font-family: 'Amatic SC', cursive;
+      font-family: 'Oswald', sans-serif;
       text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
-      font-size: 2em;
+      font-size: 0.6em;
     }
     .panel p:nth-child(2) {
-      font-size: 4em;
+      font-size: 2em;
     }
 
     .panel.open {
+      flex: 5;
       font-size:40px;
     }
 
@@ -80,33 +96,48 @@
 
   <div class="panels">
     <div class="panel panel1">
-      <p>Hey</p>
-      <p>Let's</p>
-      <p>Dance</p>
+      <p>Refugio de Respomuso, Pirineo</p>
+      <p>🔍</p>
+      <p>September 2016</p>
     </div>
     <div class="panel panel2">
-      <p>Give</p>
-      <p>Take</p>
-      <p>Receive</p>
+      <p>Monfragüe, Extremadura</p>
+      <p>🔍</p>
+      <p>September 2016</p>
     </div>
     <div class="panel panel3">
-      <p>Experience</p>
-      <p>It</p>
-      <p>Today</p>
+      <p>Loch Lomond, Scotland</p>
+      <p>🔍</p>
+      <p>July 2016</p>
     </div>
     <div class="panel panel4">
-      <p>Give</p>
-      <p>All</p>
-      <p>You can</p>
+      <p>Suances, Cantabria</p>
+      <p>🔍</p>
+      <p>July 2015</p>
     </div>
     <div class="panel panel5">
-      <p>Life</p>
-      <p>In</p>
-      <p>Motion</p>
+      <p>Val d'Echo, Pirineo</p>
+      <p>🔍</p>
+      <p>August 2014</p>
     </div>
   </div>
 
   <script>
+  const panels = document.querySelectorAll('.panel');
+
+  function toggleOpen() {
+    this.classList.toggle('open');
+  }
+
+  function toggleActive(e) {
+    console.log(e.propertyName);
+    if(e.propertyName.includes('flex')) {
+      this.classList.toggle('open-active');
+    }
+  }
+
+  panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+  panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
 
   </script>
 
