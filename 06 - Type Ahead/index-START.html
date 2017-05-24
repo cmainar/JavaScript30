@@ -8,14 +8,14 @@
 <body>
 
   <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
+    <input type="text" class="search" placeholder="City or region">
     <ul class="suggestions">
       <li>Filter for a city</li>
-      <li>or a state</li>
+      <li>or a region</li>
     </ul>
   </form>
 <script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const endpoint = 'https://gist.githubusercontent.com/cmainar/689124b00cabc6f0571cd8af65a96c27/raw/711b9d63abf346eeb35e91e60caeaac5c34b4ab2/zaragoza-municipalities.json';
 
 const cities = [];
 
@@ -25,9 +25,9 @@ fetch(endpoint)
 
 function findMatches(wordToMatch, cities) {
   return cities.filter(place => {
-    //here we need to figure out if city or state matches what was searched
+    //here we need to figure out if city or region matches what was searched
     const regex = new RegExp(wordToMatch, 'gi');
-    return place.city.match(regex) || place.state.match(regex)
+    return place.city.match(regex) || place.region.match(regex)
   });
 }
 
@@ -40,10 +40,10 @@ function displayMatches() {
   const html = matchArray.map(place => {
     const regex = new RegExp(this.value, 'gi');
     const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
-    const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+    const regionName = place.region.replace(regex, `<span class="hl">${this.value}</span>`);
     return `
     <li>
-      <span class="name">${cityName}, ${stateName}</span>
+      <span class="name">${cityName}, ${regionName}</span>
       <span class="population">${numberWithCommas(place.population)}</span>
     </li>
     `;
